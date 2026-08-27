@@ -12,6 +12,5 @@ public class ListUtil
     */
     public static void reverse(LinkedList<String> strings)
     {
-        ...
     }
 }
