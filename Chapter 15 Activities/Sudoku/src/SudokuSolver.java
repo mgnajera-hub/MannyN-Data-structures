@@ -283,7 +283,7 @@ public class SudokuSolver {
             }
             else if(col < 6)
             {
-                col = 7;
+                currentSquare = 7;
             }
             else
                 currentSquare = 8;
