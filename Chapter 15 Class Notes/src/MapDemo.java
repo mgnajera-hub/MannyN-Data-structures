@@ -20,8 +20,6 @@ public class MapDemo
         favColors.put("Manny",Color.YELLOW);
         favColors.put("Emily",Color.RED);
         favColors.put("Evan",Color.GREEN);
-        favColors.put("pollux",Color.GREEN);
-        favColors.put("psyche",Color.RED);
 
 
 
