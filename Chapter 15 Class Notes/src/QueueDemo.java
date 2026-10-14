@@ -15,7 +15,7 @@ public class QueueDemo
         // Add some print jobs
         jobs.add("Jason: Quarter 2 Expense Report");
         jobs.add("Evan: Recipe for Banana Bread");
-        jobs.add("Emily: Top Secret Document");
+        jobs.add("Emily: Top Secret Document"); 
 
         //Removes first in first out
         System.out.println("Printing: " + jobs.remove()); //Prints Jason's quarter report
