@@ -21,7 +21,15 @@ public class BinarySearchTree
     */
     public void add(Comparable obj) 
     {   
-        
+        Node newNode = new Node();
+        newNode.data = obj;
+        newNode.left = null;
+        newNode.right = null;
+
+        if (this.root == null)
+            this.root = newNode;
+        else
+            this.root.addNode(newNode);
     }
 
     /**
@@ -31,7 +39,20 @@ public class BinarySearchTree
     */
     public boolean find(Comparable obj)
     {
+        Node current = this.root;
+        while (current != null)
+        {
+            int diff = obj.compareTo(current.data);
+            if (diff == 0)
+                return true;
+            else if (diff < 0)
+                current = current.left;
+            else
+                current = current.right;
+        }
+
         return false;
+        
     }
     
     /**
@@ -41,7 +62,85 @@ public class BinarySearchTree
     */
     public void remove(Comparable obj)
     {
+        Node toBeRemoved = this.root;
+        boolean found = false;
+        Node parent = null;
+
+        while (!found && toBeRemoved != null)
+        {
+            int diff = obj.compareTo(toBeRemoved);
+            if (diff == 0)
+                found = true;
+            else if(diff < 0)
+            {
+                parent = toBeRemoved;
+                toBeRemoved = toBeRemoved.left;
+            }
+            else
+            {
+                parent = toBeRemoved;
+                toBeRemoved = toBeRemoved.right;
+            }
+        }
+
+        if (!found)
+            return;
+
+        //Case 1 and Case 2 (At least one child is null)
+        if (toBeRemoved.right == null || toBeRemoved.left == null)
+        {
+            Node newChild; //only one, can either be left or right child
+
+            if (toBeRemoved.left == null)
+            {
+                newChild = toBeRemoved.right;
+            }
+            else
+            {
+                newChild = toBeRemoved.left;
+            }
+
+            // Remove the root if the parent is null
+            if(parent == null)
+                this.root = newChild;
+
+            else if (parent.left == toBeRemoved)
+            {
+                parent.left = newChild;
+            }
+            else
+            {
+                parent.right = newChild;
+            }
+
+            return; //can move on to the last case 
+
+        }
+
+        //Case 3 remove a node with two children
+        //find the least element of the right subtree, the least element will replace the removed node
+        Node leastParent = toBeRemoved;
+        Node least = toBeRemoved;
         
+        while (least.left != null)
+        {
+            leastParent = least;
+            least = least.left;
+        }
+
+        //Move the data to the node being removed
+        toBeRemoved.data = least.data;
+
+        //unlink the least child
+        if(leastParent == toBeRemoved)
+        {
+            leastParent.right = least.right;
+        }
+        else
+        {
+            leastParent.left = least.right;
+        }
+
     }
     
     /**
@@ -49,7 +148,8 @@ public class BinarySearchTree
     */
     public void print()
     {   
-        
+        print(this.root);
+        System.out.println();
     }   
 
     /**
@@ -58,7 +158,14 @@ public class BinarySearchTree
     */
     private static void print(Node parent)
     {   
-        
+        if (parent == null)
+        {
+            return;
+        }
+
+        print(parent.left); //recursively calls the print method
+        System.out.println(parent.data + " ");
+        print(parent.right); //recursively calls the print method
     }
 
     /**
@@ -67,17 +174,42 @@ public class BinarySearchTree
     */
     static class Node
     {   
-        
+        //A Binary search tree MUST be made of Comparable Objects!
+        public Comparable data;
+        public Node left;
+        public Node right;
 
         /**
             Inserts a new node as a descendant of this node.
             @param newNode the node to insert
         */
         public void addNode(Node newNode)
-        {   
-            
+        {
+            //if diff < 0, newNode is to the left of this node
+            //If diff > 0, newNode is to the right of this node   
+            int diff = newNode.data.compareTo(data);
+
+            if (diff < 0)
+            {
+                if (left == null)
+                    left = newNode;
+                else
+                    left.addNode(newNode);
+            }
+            else if (diff > 0)
+            {
+                if (right == null)
+                    right = newNode;
+                else
+                    right.addNode(newNode);
+            }
         }
     }
+
+
+
+
+
 }
 
 

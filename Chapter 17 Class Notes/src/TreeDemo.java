@@ -13,5 +13,17 @@ public class TreeDemo
       Tree t4 = new Tree("Savannah");
       t2.addSubtree(t4);
       System.out.println("Size: " + t1.size());
-   }
+
+      //BinaryTree Test
+      BinaryTree empty = new BinaryTree(); //empty binary tree
+      BinaryTree bt4 = new BinaryTree("Chicago");
+      BinaryTree bt3 = new BinaryTree("Atlanta");
+      BinaryTree bt2 = new BinaryTree("Miami",bt4,empty);
+      BinaryTree bt1 = new BinaryTree("San Diengo", bt3, bt3);
+
+      System.out.println("Binary Tree Root: "+bt1.data());
+      System.out.println("Binary Tree height: "+bt1.height());
+
+
+      
 }

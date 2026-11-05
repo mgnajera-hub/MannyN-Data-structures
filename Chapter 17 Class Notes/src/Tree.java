@@ -6,10 +6,17 @@ import java.util.ArrayList;
 */
 public class Tree
 {
+    private Node root;
+
+
     
     static class Node
     {
-        
+        public Object data;
+        public List<Node> children;
+
+
+
 
         /**
             Computes the size of the subtree whose root is this node.
@@ -17,7 +24,11 @@ public class Tree
         */
         public int size()
         {
-            return 0;
+            int total = 1;
+            for (Node child : this.children)
+            {
+                total += child.size();
+            }
         }
     }
 
@@ -27,7 +38,10 @@ public class Tree
     */
     public Tree(Object rootData)
     {
-        
+        this.root = new Node();
+        this.root.data = rootData;
+        this.root.children = new ArrayList<>();
+
     }
 
     /**
@@ -35,7 +49,7 @@ public class Tree
     */
     public void addSubtree(Tree subtree)
     {
-        
+        this.root.children.add(subtree.root); //add the ROOT of the subtree to the tree, which will add all its children too
     }
 
     /**
@@ -44,8 +58,51 @@ public class Tree
     */
     public int size() 
     {
-        return 0;
+        //individual nodes already have size method
+        return this.root.size();
     }
 
     // Additional methods will be added in later sections.
+
+    //A visitor method is called for every visited Node during a tree traversal
+    public interface Visitor
+    {
+        /*
+        The visit method is called for each visited node
+        @param data: The data of the Node being visited
+        */
+
+        void visit(Object data);
+    }
+
+    /*
+    Traverse this tree in preorder
+    @param v: The visitor to be invoked on each node
+    */
+
+    public void preorder(Visitor v)
+    {
+        Tree.preorder(this.root, v);
+    }
+
+    /*
+    Traverse the tree with a given root in preorder
+    @param n: The root of the tree to traverse
+    @param v: The visitor to be invoked on each Node
+    */
+   private static void preorder(Node n, Visitor v)
+   {
+    if (n == null)
+        return;
+
+        v.visit(n.data);
+
+        for (Node child : n.children)
+        {
+            Tree.preorder(child, v);
+        }
+   }
+
+
+
 }
